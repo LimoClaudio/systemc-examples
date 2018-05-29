@@ -1,9 +1,3 @@
-/*
- * driver.h
- *
- *  Created on: Mar 4, 2016
- *      Author: karibe
- */
 
 #ifndef DRIVER_H_
 #define DRIVER_H_
@@ -11,19 +5,28 @@
 #include<systemc>
 
 SC_MODULE(driver){
-sc_out<bool> d_a;
+	sc_out<bool> d_a0;
+	sc_out<bool> d_a1;
 
-SC_CTOR(driver){
-	SC_THREAD(drive);
-}
-
-void drive(void){
-	while(1){
-		d_a=0;
-		wait(5,SC_NS);
-		d_a=1;
-		wait(5,SC_NS);
+	SC_CTOR(driver){
+		SC_THREAD(drive);
 	}
-}
+
+	void drive(void){
+		while(1){
+			d_a0 = 0; 
+			d_a1 = 0;
+			wait(5,SC_NS);
+			d_a0 = 1; 
+			d_a1 = 0;
+			wait(5,SC_NS);
+			d_a0 = 0; 
+			d_a1 = 1;
+			wait(5,SC_NS);
+			d_a0 = 1; 
+			d_a1 = 1;
+			wait(5,SC_NS);
+		}
+	}
 };
 #endif /* DRIVER_H_ */
